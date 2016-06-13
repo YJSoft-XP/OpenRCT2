@@ -21,7 +21,7 @@ matrix:
             - mv OpenRCT2/bin/openrct2 OpenRCT2/ && mv OpenRCT2/share/openrct2 OpenRCT2/data && mv OpenRCT2/share/doc/openrct2 OpenRCT2/doc
             - rm -rf OpenRCT2/bin OpenRCT2/share # remove empty dirs
             - tar cvzf openrct2-linux.tar.gz OpenRCT2/
-            - curl --progress-bar --upload-file openrct2-linux.tar.gz https://transfer.sh/openrct2-linux.tar.gz -o link && cat link; fi
+            - curl --progress-bar --upload-file openrct2-linux.tar.gz https://transfer.sh/openrct2-linux.tar.gz -o link && cat link;
         - os: linux
           env: OPENRCT2_CMAKE_OPTS="-DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++"
         - os: linux
@@ -31,8 +31,8 @@ matrix:
             - make install
             - mv OpenRCT2/bin/openrct2 OpenRCT2/ && mv OpenRCT2/share/openrct2 OpenRCT2/data && mv OpenRCT2/share/doc/openrct2 OpenRCT2/doc
             - rm -rf OpenRCT2/bin OpenRCT2/share # remove empty dirs
-            - tar cvzf openrct2-windows.tar.gz OpenRCT2/
-            - curl --progress-bar --upload-file openrct2-windows.tar.gz https://transfer.sh/openrct2-windows.tar.gz -o link && cat link; fi
+            - tar cvzf openrct2-windows-mingw.tar.gz OpenRCT2/
+            - curl --progress-bar --upload-file openrct2-windows-mingw.tar.gz https://transfer.sh/openrct2-windows-mingw.tar.gz -o link && cat link;
         - os: linux
           env: TARGET=docker32
           services:
@@ -50,7 +50,7 @@ matrix:
           after_success:
             - cd build/Release
             - zip -r openrct2-osx.zip OpenRCT2.app
-            - curl --progress-bar --upload-file openrct2-osx.zip https://transfer.sh/openrct2-osx.zip -o link && cat link; fi
+            - curl --progress-bar --upload-file openrct2-osx.zip https://transfer.sh/openrct2-osx.zip -o link && cat link;
         - os: linux
           env: OPENRCT2_CMAKE_OPTS="-DFORCE64=ON" TARGET=linux64
         # Following entries used to be included in testing, but they only proved useful while changing things in CMake setup.
