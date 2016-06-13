@@ -15,6 +15,7 @@ matrix:
         - os: linux
           env:
             - OPENRCT2_CMAKE_OPTS="-DCMAKE_C_COMPILER=gcc-4.8 -DCMAKE_CXX_COMPILER=g++-4.8 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=OpenRCT2" OPENRCT2_MAKE_OPTS="-j2"
+            - secure: "S3u2VCE2Vy8KNXoeh+DhnzjCmgTX0r95uEZrXDU+IKANOOCKn7Dg4OFDZE3LY/i1y2/EUDpnR5yLC38Ks795EUP/sv/OoMl4tjQ20yERjqWh+gcIRrgx7SdVabuAh3t4aBdaLD4Pfnj5avxeCt6rL7yGnj0wdbrbJSBZPsgSnuQ="
           after_success:
             - cd build
             - make install
@@ -27,7 +28,11 @@ matrix:
         - os: linux
           env: OPENRCT2_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=../CMakeLists_mingw.txt" TARGET=windows
           after_success:
-            - tar cvzf openrct2-windows-mingw.tar.gz build/
+            - cd build
+            - make install
+            - mv OpenRCT2/bin/openrct2 OpenRCT2/ && mv OpenRCT2/share/openrct2 OpenRCT2/data && mv OpenRCT2/share/doc/openrct2 OpenRCT2/doc
+            - rm -rf OpenRCT2/bin OpenRCT2/share # remove empty dirs
+            - tar cvzf openrct2-windows-mingw.tar.gz OpenRCT2/
             - curl --progress-bar --upload-file openrct2-windows-mingw.tar.gz https://transfer.sh/openrct2-windows-mingw.tar.gz -o link && cat link;
         - os: linux
           env: TARGET=docker32
@@ -43,6 +48,8 @@ matrix:
             - docker
         - os: osx
           osx_image: xcode7.3
+          env:
+            - secure: "OXn/i72FxW/oh6RGlaN+gHSbkt1ToFe36etaiDOsJQznt6fe9CpFdnE8U1XBHlGokcEjbGNErRU7CFDKYHQuGrPZyHXwgqG2/0emIqFaFt5ti5ypyYKf5qH9x1LLLfdZxDyHkxXdlJ7Etxbp3G7qrV8CGRQiYRNHm1f98AmuufE="
           after_success:
             - cd build/Release
             - zip -r openrct2-osx.zip OpenRCT2.app
